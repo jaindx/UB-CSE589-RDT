@@ -87,7 +87,7 @@ void A_input(packet)
 
     base = packet.acknum + 1;
 
-    while ((seq_num < base+window_size) && (start_buffer_pos < end_buffer_pos))
+    while (seq_num < base+window_size && start_buffer_pos < end_buffer_pos)
     {
         Send_Packet_From_A(seq_num, message_buffer[start_buffer_pos]);
         start_buffer_pos++;
@@ -109,7 +109,7 @@ void A_timerinterrupt()
 {
     starttimer(0, timer_increment);
     printf ("A_timerinterrupt: Resending unACKed packets in the window\n");
-    for (int i= base; i <seq_num; i++)
+    for (int i = base; i < seq_num; i++)
     {
         tolayer3(0, resend_buffer[i]);
     }
